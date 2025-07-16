@@ -22,7 +22,7 @@ const screenOptions = {
         },
     }),
 };
-
+  
 // Configuración específica para cada pantalla
 const screenConfigs = [
     {
