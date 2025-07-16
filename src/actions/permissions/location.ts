@@ -21,6 +21,8 @@ export const requestLocationPermission = async (): Promise<PermissionStatus> => 
 
         await openSettings()
 
+        return await checkLocationPermission()
+
     }
 
     const permissionMapper: Record<LocationPermissionStatus, PermissionStatus> = {

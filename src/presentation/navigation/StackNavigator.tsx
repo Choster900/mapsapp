@@ -22,7 +22,7 @@ const screenOptions = {
         },
     }),
 };
-  
+
 // Configuración específica para cada pantalla
 const screenConfigs = [
     {
@@ -54,7 +54,7 @@ const screenConfigs = [
 export const StackNavigator: React.FC = () => {
     return (
         <Stack.Navigator
-            initialRouteName="LoadingScreen"
+            initialRouteName="PermissionsScreen"
             screenOptions={screenOptions}
         >
             {screenConfigs.map(({ name, component, options }) => (
