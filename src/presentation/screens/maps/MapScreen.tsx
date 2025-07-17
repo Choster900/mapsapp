@@ -1,30 +1,36 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import Map from '../../components/Map';
+import { useLocationStore } from '../../store/location/useLocationStore';
+import LoadingScreen from '../loading/LoadingScreen';
 
 export default function MapScreen() {
+    const { lastKnownLocation, getLocation } = useLocationStore();
+    const [mapReady, setMapReady] = useState(false);
+
+    useEffect(() => {
+        getLocation();
+    }, []);
+
+    useEffect(() => {
+        if (lastKnownLocation) {
+            setMapReady(true); // solo después de obtener la ubicación real
+        }
+    }, [lastKnownLocation]);
+
+    if (!mapReady || lastKnownLocation === null) {
+        return <LoadingScreen />;
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>🗺️ MapScreen</Text>
-            <Text style={styles.subtitle}>Aquí se mostrará el mapa próximamente.</Text>
+            <Map initialLocation={lastKnownLocation} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f0f4f8',
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#2a5d9f',
-        marginBottom: 10,
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#555',
+        ...StyleSheet.absoluteFillObject,
     },
 });

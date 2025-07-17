@@ -12,20 +12,9 @@ export default function PermissionsChecker({ children }: PropsWithChildren) {
     const navigation = useNavigation<NavigationProp<RootStackParams>>()
 
     useEffect(() => {
-
-        if (locationStatus === 'granted') {
-
-            navigation.navigate('MapScreen')
-
-        } else if (locationStatus === 'denied') {
-            navigation.navigate('PermissionsScreen')
-        }
-
-    }, [locationStatus])
-
-
-    useEffect(() => {
         const suscription = AppState.addEventListener('change', async (nextAppState) => {
+
+            console.log('AppState changed to:', nextAppState);
             if (nextAppState === 'active') {
                 await checkLocationPermission()
             }
@@ -35,6 +24,30 @@ export default function PermissionsChecker({ children }: PropsWithChildren) {
             suscription.remove()
         }
     }, [])
+
+    useEffect(() => {
+
+        console.log(locationStatus)
+
+        if (locationStatus === 'granted') {
+
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'MapScreen' }],
+            })
+
+        } else if (locationStatus === 'undetermined') {
+
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'PermissionsScreen' }],
+            })
+        }
+
+    }, [locationStatus])
+
+
+
 
     return (
         <>

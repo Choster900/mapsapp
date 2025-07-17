@@ -54,7 +54,7 @@ const screenConfigs = [
 export const StackNavigator: React.FC = () => {
     return (
         <Stack.Navigator
-            initialRouteName="PermissionsScreen"
+            initialRouteName="LoadingScreen"
             screenOptions={screenOptions}
         >
             {screenConfigs.map(({ name, component, options }) => (
